@@ -74,13 +74,15 @@ export default function SimpleSidebar() {
       <Box className="h-full flex flex-col">
         {/* header */}
         <Box className="flex items-center gap-2 border-b px-4 py-3">
-          <Box className="bg-blue-600 text-white p-2 rounded-lg">
-            <Brain size={18} />
-          </Box>
           <Box>
-            <Typography variant="body1" fontWeight="bold">
-              MLOps Platform
-            </Typography>
+            <div className="flex items-center">
+        <img
+          src="/Logo.svg"
+          alt="ES Logo"
+          style={{ height: '40px', cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        />
+      </div>
             <Typography variant="caption" color="textSecondary">
               v2.1.0
             </Typography>

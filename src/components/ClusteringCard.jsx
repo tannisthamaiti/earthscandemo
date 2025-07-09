@@ -27,7 +27,7 @@ export default function ClusteringCard({ onRunClustering }) {
     <>
       <Card className="shadow-md">
         <CardHeader
-          avatar={<BarChart size={18} />}          {/* lucide icon */}
+          avatar={<BarChart size={18} />}          
           title="Clustering Analysis"
           subheader="Unsupervised well segmentation"
         />

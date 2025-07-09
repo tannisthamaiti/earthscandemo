@@ -1,10 +1,10 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   SignedIn,
   SignedOut,
   UserButton,
   SignInButton,
-  SignUpButton
+  SignUpButton,
 } from "@clerk/clerk-react";
 
 export default function Navbar() {
@@ -12,40 +12,34 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-3 bg-white shadow">
-      {/* Left: Logo */}
-      <div className="flex items-center">
-        <img
-          src="/Logo.svg"
-          alt="ES Logo"
-          style={{ height: '40px', cursor: 'pointer' }}
-          onClick={() => navigate('/')}
-        />
-      </div>
-
-      {/* Right: Nav links + Profile */}
+    <nav className="flex items-center px-6 py-3 bg-white shadow">
+      {/* ─── Left – nav links ─────────────────────────────
       <div className="flex items-center gap-6">
         <button
+          onClick={() => navigate("/")}
           className={`text-sm font-medium hover:text-blue-600 ${
-            location.pathname === '/' ? 'text-blue-600 underline' : ''
+            location.pathname === "/" ? "text-blue-600 underline" : ""
           }`}
-          onClick={() => navigate('/')}
         >
           Home
         </button>
+
         <button
+          onClick={() => navigate("/dashboard")}
           className={`text-sm font-medium hover:text-blue-600 ${
-            location.pathname === '/dashboard' ? 'text-blue-600 underline' : ''
+            location.pathname === "/dashboard" ? "text-blue-600 underline" : ""
           }`}
-          onClick={() => navigate('/dashboard')}
         >
           Dashboard
         </button>
+      </div> */}
 
-        {/* Auth controls */}
+      {/* ─── Right – auth controls ──────────────────────── */}
+      <div className="flex items-center gap-4 ml-auto">
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
+
         <SignedOut>
           <SignInButton />
           <SignUpButton />
