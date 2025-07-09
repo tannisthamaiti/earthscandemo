@@ -25,7 +25,7 @@ import CloudSiloSetup       from "./pages/CloudSiloSetup";
 
 import Navbar          from "./components/Navbar";
 import WorkflowStepper from "./components/WorkflowStepper";
-import SimpleSidebar   from "./components/SimpleSidebar";
+import SimpleSidebar from "./components/SimpleSidebar";
 import Footer          from "./components/Footer";
 import RequireAuth     from "./components/RequireAuth";
 
@@ -34,59 +34,192 @@ import "./App.css";
 
 export default function App() {
   return (
-    <ClerkProvider>
+    
       <Router>
-        {/* ─── Top-level flex row: sidebar | main area ─────────────────── */}
-        <div className="flex min-h-screen">
-          {/* -------- Sidebar (fixed width inside component) -------- */}
+         {/* top-level flex layout */}
+    <div className="app-container flex min-h-screen">
+    {/* -------- Sidebar -------- */}
+    <RequireAuth>
+      <SimpleSidebar />
+    </RequireAuth>
+
+    {/* -------- Main content -------- */}
+    <div className="flex-1 flex flex-col">
+      <RequireAuth>
+        <Navbar />
+        {/* <WorkflowStepper /> */}
+      </RequireAuth>
+
+
+          {/* ----- Routed pages ----- */}
+          <main className="main-content">
+            <Routes>
+              {/* 🔓 PUBLIC */}
+              <Route path="/" element={<Landing />} />
+
+              {/* 🔐 PROTECTED – wrap EACH element in <RequireAuth> */}
+              <Route
+                path="/register"
+                element={
+                  <RequireAuth>
+                    <Register />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/tiers"
+                element={
+                  <RequireAuth>
+                    <TierSelection />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/storage"
+                element={
+                  <RequireAuth>
+                    <StorageSelection />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/upload"
+                element={
+                  <RequireAuth>
+                    <DataUpload />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/roi"
+                element={
+                  <RequireAuth>
+                    <ROIModal />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/vendor"
+                element={
+                  <RequireAuth>
+                    <VendorMap />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/well-map"
+                element={
+                  <RequireAuth>
+                    <WellMap />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/voxel"
+                element={
+                  <RequireAuth>
+                    <VoxelTabViewer />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/convex-chat"
+                element={
+                  <RequireAuth>
+                    <ConvexChat />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/classification-agent"
+                element={
+                  <RequireAuth>
+                    <ClassificationAgent />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/ask-image"
+                element={
+                  <RequireAuth>
+                    <AskImageQuestion />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/digital-twin"
+                element={
+                  <RequireAuth>
+                    <DigitalTwin />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/TableA5View"
+                element={
+                  <RequireAuth>
+                    <TableA5View />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/texasmap"
+                element={
+                  <RequireAuth>
+                    <TexasMap />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/privacy"
+                element={
+                  <RequireAuth>
+                    <Privacy />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/terms"
+                element={
+                  <RequireAuth>
+                    <Terms />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/cloud-setup"
+                element={
+                  <RequireAuth>
+                    <CloudSiloSetup />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/FieldDetailsModal"
+                element={
+                  <RequireAuth>
+                    <FieldDetailsModal />
+                  </RequireAuth>
+                }
+              />
+            </Routes>
+          </main>
+
+          {/* ----- Footer (hidden until login) ----- */}
           <RequireAuth>
-            <SimpleSidebar />
+            <Footer />
           </RequireAuth>
-
-          {/* -------- Main column -------- */}
-          <div className="flex-1 flex flex-col">
-            {/* Header (optional) */}
-            <RequireAuth>
-              <Navbar />
-              {/* <WorkflowStepper /> */}
-            </RequireAuth>
-
-            {/* Routed pages */}
-            <main className="flex-1 overflow-y-auto p-4">
-              <Routes>
-                {/* 🔓 PUBLIC */}
-                <Route path="/" element={<Landing />} />
-
-                {/* 🔐 PROTECTED */}
-                <Route path="/register"            element={<RequireAuth><Register /></RequireAuth>} />
-                <Route path="/tiers"               element={<RequireAuth><TierSelection /></RequireAuth>} />
-                <Route path="/storage"             element={<RequireAuth><StorageSelection /></RequireAuth>} />
-                <Route path="/upload"              element={<RequireAuth><DataUpload /></RequireAuth>} />
-                <Route path="/roi"                 element={<RequireAuth><ROIModal /></RequireAuth>} />
-                <Route path="/vendor"              element={<RequireAuth><VendorMap /></RequireAuth>} />
-                <Route path="/dashboard"           element={<RequireAuth><Dashboard /></RequireAuth>} />
-                <Route path="/well-map"            element={<RequireAuth><WellMap /></RequireAuth>} />
-                <Route path="/voxel"               element={<RequireAuth><VoxelTabViewer /></RequireAuth>} />
-                <Route path="/convex-chat"         element={<RequireAuth><ConvexChat /></RequireAuth>} />
-                <Route path="/classification-agent"element={<RequireAuth><ClassificationAgent /></RequireAuth>} />
-                <Route path="/ask-image"           element={<RequireAuth><AskImageQuestion /></RequireAuth>} />
-                <Route path="/digital-twin"        element={<RequireAuth><DigitalTwin /></RequireAuth>} />
-                <Route path="/TableA5View"         element={<RequireAuth><TableA5View /></RequireAuth>} />
-                <Route path="/texasmap"            element={<RequireAuth><TexasMap /></RequireAuth>} />
-                <Route path="/privacy"             element={<RequireAuth><Privacy /></RequireAuth>} />
-                <Route path="/terms"               element={<RequireAuth><Terms /></RequireAuth>} />
-                <Route path="/cloud-setup"         element={<RequireAuth><CloudSiloSetup /></RequireAuth>} />
-                <Route path="/FieldDetailsModal"   element={<RequireAuth><FieldDetailsModal /></RequireAuth>} />
-              </Routes>
-            </main>
-
-            {/* Footer */}
-            <RequireAuth>
-              <Footer />
-            </RequireAuth>
-          </div>
+        </div>
         </div>
       </Router>
-    </ClerkProvider>
+    
   );
 }

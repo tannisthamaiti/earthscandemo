@@ -1,32 +1,14 @@
+/* SimpleSidebar.jsx — fixed-width sidebar */
+
 import React, { useState } from "react";
 import {
-  Upload,
-  Sparkles,
-  Database,
-  BarChart3,
-  Brain,
-  Target,
-  CheckCircle,
-  Settings,
-  Home,
-  FileText,
-  Activity,
-  ChevronRight,
-  ChevronDown,
+  Upload, Sparkles, Database, BarChart3, Brain, Target,
+  CheckCircle, Settings, Home, FileText, Activity, ChevronDown,
 } from "lucide-react";
-
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  Box,
-  IconButton,
-  Divider,
+  Accordion, AccordionSummary, AccordionDetails,
+  List, ListItem, ListItemIcon, ListItemText,
+  Typography, Box, Divider,
 } from "@mui/material";
 
 const workflowSteps = [
@@ -73,7 +55,6 @@ const workflowSteps = [
     description: "Model performance metrics",
   },
 ];
-
 const navigationItems = [
   { title: "Dashboard", url: "/", icon: Home },
   { title: "Projects", url: "/projects", icon: FileText },
@@ -82,14 +63,16 @@ const navigationItems = [
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
-export default function SimpleSidebar() {
-  const [navExpanded, setNavExpanded] = useState(true);
-  const [pipelineExpanded, setPipelineExpanded] = useState(true);
 
+export default function SimpleSidebar() {
+  const [navExpanded,      setNavExpanded]      = useState(true);
+  const [pipelineExpanded, setPipelineExpanded] = useState(true);
+  
   return (
-    <aside className="block w-64 border-r bg-gray-100 max-h-screen">
+    // 🔑 put this <aside> inside a parent flex container in your page layout
+    <aside className="flex-none w-64 shrink-0 border-r bg-gray-100 min-h-screen">
       <Box className="h-full flex flex-col">
-        {/* Header */}
+        {/* header */}
         <Box className="flex items-center gap-2 border-b px-4 py-3">
           <Box className="bg-blue-600 text-white p-2 rounded-lg">
             <Brain size={18} />
@@ -104,18 +87,23 @@ export default function SimpleSidebar() {
           </Box>
         </Box>
 
-        {/* Scrollable content */}
+        {/* scrollable middle */}
         <Box className="flex-1 overflow-y-auto px-4 py-2 space-y-4">
-          {/* Navigation Accordion */}
-          <Accordion expanded={navExpanded} onChange={() => setNavExpanded(!navExpanded)}>
+          {/* Navigation accordion */}
+          <Accordion
+            disableGutters
+            elevation={0}
+            expanded={navExpanded}
+            onChange={() => setNavExpanded(!navExpanded)}
+          >
             <AccordionSummary expandIcon={<ChevronDown size={16} />}>
               <Typography className="text-sm font-medium">Navigation</Typography>
             </AccordionSummary>
-            <AccordionDetails>
-              <List>
+            <AccordionDetails className="p-0">
+              <List dense>
                 {navigationItems.map((item) => (
-                  <ListItem button key={item.title}>
-                    <ListItemIcon>
+                  <ListItem key={item.title} button>
+                    <ListItemIcon sx={{ minWidth: 28 }}>
                       <item.icon size={18} />
                     </ListItemIcon>
                     <ListItemText primary={item.title} />
@@ -125,27 +113,30 @@ export default function SimpleSidebar() {
             </AccordionDetails>
           </Accordion>
 
-          {/* ML Pipeline Accordion */}
-          <Accordion expanded={pipelineExpanded} onChange={() => setPipelineExpanded(!pipelineExpanded)}>
+          {/* Pipeline accordion */}
+          <Accordion
+            disableGutters
+            elevation={0}
+            expanded={pipelineExpanded}
+            onChange={() => setPipelineExpanded(!pipelineExpanded)}
+          >
             <AccordionSummary expandIcon={<ChevronDown size={16} />}>
               <Typography className="text-sm font-medium">ML Pipeline</Typography>
             </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                {workflowSteps.map((step, index) => (
+            <AccordionDetails className="p-0">
+              <List dense>
+                {workflowSteps.map((step, i) => (
                   <ListItem
                     key={step.title}
                     button
                     className={`rounded-md ${
-                      step.status === "active"
-                        ? "bg-blue-100"
-                        : "hover:bg-gray-200"
+                      step.status === "active" ? "bg-blue-100" : "hover:bg-gray-200"
                     }`}
                   >
-                    <ListItemIcon>
+                    <ListItemIcon sx={{ minWidth: 28 }}>
                       <Box className="flex items-center gap-2">
                         <span className="h-5 w-5 flex items-center justify-center text-xs rounded-full bg-gray-200">
-                          {index + 1}
+                          {i + 1}
                         </span>
                         <step.icon size={16} />
                       </Box>
@@ -169,8 +160,9 @@ export default function SimpleSidebar() {
           </Accordion>
         </Box>
 
-        {/* Footer */}
-        <Box className="p-4 mt-auto text-xs text-gray-500 flex items-center gap-2">
+        {/* footer */}
+        <Divider />
+        <Box className="p-4 text-xs text-gray-500 flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-green-500 inline-block"></span>
           All systems operational
         </Box>
